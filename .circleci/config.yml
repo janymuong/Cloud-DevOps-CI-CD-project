@@ -153,6 +153,33 @@ jobs:
           - destroy-environment:
               workflow_id: ${CIRCLE_WORKFLOW_ID:0:7} 
     
+    configure-infrastructure:
+      docker:
+        # Docker image here that supports Ansible
+        - image: python:3.10-alpine3.16
+      steps:
+        - checkout
+        # Add ssh keys with fingerprint
+        - add_ssh_keys:
+           fingerprints:
+              - "58:8a:d0:31:65:2f:3e:99:4a:c2:a2:bc:ef:ce:73:39"
+        # attach workspace
+        - attach_workspace:
+            at: ~/
+        - run:
+            name: Install ansible, tar gzip aws-cli openssh
+            command: |
+              apk add --update --no-cache ansible tar gzip aws-cli openssh
+        - run:
+            name: Configure server
+            command: |
+              cd .circleci/ansible
+              ls -a
+              ansible-playbook -i inventory.txt configure-server.yml
+            no_output_timeout: 35m
+        # Rollback on failure
+        - destroy-environment:
+            workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
     
 workflows:
     default:
@@ -172,3 +199,5 @@ workflows:
               filters:
                 branches:
                   only: [master]
+          - configure-infrastructure:
+              requires: [deploy-infrastructure]
