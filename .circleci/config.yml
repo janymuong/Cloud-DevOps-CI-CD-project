@@ -321,7 +321,7 @@ jobs:
               tar -C backend -czvf artifact.tar.gz .
 
               # create dir in deploy roles && move artifact to deploy role for ansible
-              mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+              mkdir .circleci/ansible/roles/deploy/files/
               mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
 
               # navigate to ansible & display content of inventory
