@@ -320,8 +320,8 @@ jobs:
               # zip the backend directory
               tar -C backend -czvf artifact.tar.gz .
 
-              # move artifact to deploy role for ansible
-              mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+              # copy artifact to deploy role for ansible
+              cp artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
 
               # navigate to ansible & display content of inventory
               cd .circleci/ansible
