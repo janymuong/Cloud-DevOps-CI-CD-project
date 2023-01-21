@@ -291,7 +291,7 @@ jobs:
             name: Install dependencies
             command: |
               apk add --update --no-cache ansible
-              apk add --update --no-cache tar gzip ansible
+              apk add --update --no-cache tar gzip
               apk add --update --no-cache nodejs npm
               apk add --update --no-cache aws-cli curl
         - run:

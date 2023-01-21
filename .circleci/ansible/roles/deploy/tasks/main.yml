@@ -28,21 +28,16 @@
         global: yes
         production: yes
         state: present
-  - name: "Create backend app directory"
-    file:
-      path: ~/backend-dir
-      state: directory
-
+  
   - name: unarchive zip
     become: true
     unarchive:
       src: "files/artifact.tar.gz"
-      dest: ~/backend-dir
+      dest: .
 
   - name: "Start Backend App"
     become: true
     shell: |
-      cd ~/backend-dir
       npm install
       npm run build
       pm2 stop default
