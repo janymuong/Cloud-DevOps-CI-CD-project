@@ -419,7 +419,42 @@ jobs:
         - destroy-environment
         - revert-migrations
         
-    
+    cleanup:
+      docker:
+        # Docker image with AWS CLI support
+        - image: amazon/aws-cli
+      steps:
+        # check out from git
+        - checkout
+        - run:
+            name: Install dependencies
+            command: |
+              yum install tar gzip -y
+        - attach_workspace:
+            at: ~/
+        - run:
+            name: Fetch OldStack workflow ID
+            command: |
+              export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+              --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+              echo Stack names: "${STACKS[@]}"
+              cat ~/project/OldWorkflowID.txt
+              export OldWorkflowID=$(cat ~/project/OldWorkflowID.txt)
+              echo OldWorkflowID: "${OldWorkflowID}"
+        - run:
+            name: Cleanup OldStacks
+            command: |
+              export OldWorkflowID=$(cat ~/project/OldWorkflowID.txt)
+              if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
+              then
+                echo "----------Deletes cofirmed------------"
+                echo "s3://udapeople-${OldWorkflowID}"
+                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive || true
+                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}" || true
+                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}" || true
+              else
+                echo  "----------------Cannot cleanup------------"
+              fi
 
 workflows:
     default:
@@ -451,4 +486,5 @@ workflows:
               requires: [deploy-backend, deploy-frontend]
           - cloudfront-update:
               requires: [smoke-test]
-              
+          - cleanup:
+              requires: [cloudfront-update]
