@@ -321,7 +321,7 @@ jobs:
               # zip the backend directory
               tar -C backend -czvf artifact.tar.gz .
 
-              # create dir in deploy roles && move artifact to deploy role for ansible
+              # create directory in deploy roles && move zip artifact to deploy/role for ansible
               mkdir .circleci/ansible/roles/deploy/files/
               mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
 
@@ -351,17 +351,15 @@ jobs:
         - run:
             name: Backend smoke test
             command: |
-              export BACKEND_IP=$(aws ec2 describe-instances \
-              --query "Reservations[*].Instances[*].[PublicIpAddress]" \
+              BACKEND_IP=$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --query "Reservations[*].Instances[*].[PublicIpAddress]" \
               --output text)
-              echo ${BACKEND_IP}
               
-              echo $BACKEND_IP
-              export API_URL="http://${BACKEND_IP}:3030"
+              export API_URL=http://${BACKEND_IP}:3030
               echo "API_URL=${API_URL}"
 
-              if curl -v "${API_URL}/api/status" | grep "ok"
+              if curl -s ${API_URL}/api/status | grep "ok"
               then
                 return 0
               else
@@ -370,7 +368,7 @@ jobs:
         - run:
             name: Frontend smoke test
             command: |
-              URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-${AWS_DEFAULT_REGION}.amazonaws.com/#/employees"
+              URL=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-${AWS_DEFAULT_REGION}.amazonaws.com/#/employees
               echo ${URL}
               
               if curl -s ${URL} | grep "Welcome"
