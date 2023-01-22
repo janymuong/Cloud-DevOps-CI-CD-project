@@ -363,12 +363,6 @@ jobs:
               sleep 60
               if [[ 'ok' =~ $(curl -s --connect-timeout 5 ${API_URL}/api/status | grep -o ok) ]];then return 0 else return 1;fi
 
-        # - run:
-        #     name: Backend smoke test
-        #     command: |
-        #       echo "API_URL=${API_URL}"
-        #       if [[ 'ok' =~ $(curl -s --connect-timeout 5 http://${BACKEND_IP}:3030/api/status | grep -o ok) ]];then return 0 else return 1;fi
-
         - run:
             name: Frontend smoke test
             command: |
@@ -407,7 +401,7 @@ jobs:
               cat ~/project/OldWorkflowID.txt
             
               # list out old and current workflow IDs
-              echo OldWorkflowID: cat ~/project/OldWorkflowID.txt
+              echo "${OldWorkflowID}"
               echo CurrentWorflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
               
               # update CDN
@@ -416,16 +410,12 @@ jobs:
               --stack-name InitialStack \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
-        # attach workspace
+        # persist workspace
         - persist_to_workspace:
             root: ~/
             paths:
               - project/OldWorkflowID.txt
-        - run:
-            name: 
-            command: |
-              
-              
+
         - destroy-environment
         - revert-migrations
         
