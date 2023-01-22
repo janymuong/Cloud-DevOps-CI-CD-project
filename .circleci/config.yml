@@ -256,8 +256,8 @@ jobs:
               --output text)
               export API_URL="http://${BACKEND_IP}:3030"
               echo "API_URL=${API_URL}"
-              # append API url to .env file 
-              echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+              # reddirect API url to .env file 
+              echo API_URL="http://${BACKEND_IP}:3030" > frontend/.env
               # print to stdout
               cat frontend/.env
         - run:
@@ -349,7 +349,7 @@ jobs:
               apk add --update --no-cache curl aws-cli
               apk add --update --no-cache nodejs npm
         - run:
-            name: Backend smoke test
+            name: Get Backend URL
             command: |
               BACKEND_IP=$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -359,12 +359,12 @@ jobs:
               export API_URL=http://${BACKEND_IP}:3030
               echo "API_URL=${API_URL}"
 
-              if curl -s ${API_URL}/api/status | grep "ok"
-              then
-                return 0
-              else
-                return 1
-              fi 
+        - run:
+            name: Backend smoke test
+            command: |
+              echo "API_URL=${API_URL}"
+              if [[ 'ok' =~ $(curl -s --connect-timeout 5 http://${BACKEND_IP}:3030/api/status | grep -o ok) ]];then return 0 else return 1;fi
+
         - run:
             name: Frontend smoke test
             command: |
