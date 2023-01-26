@@ -19,6 +19,7 @@
 * [Configuration Management](instructions/3-configuration-management.md)
 * [Turn Errors into Sirens](instructions/4-turn-errors-into-sirens.md)
 
+---
 ### Project Submission
 
 ```submission```
