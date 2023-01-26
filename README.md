@@ -2,7 +2,7 @@
 ---
 ```Cloud DevOps Engineering```
 
-## Premise and objectives:
+## Premise and Objectives
 
 - Explain the fundamentals and benefits of CI/CD to achieve, build, and deploy automation for cloud-based software products.
 - Utilize Deployment Strategies to design and build CI/CD pipelines that support Continuous Delivery processes.
@@ -24,11 +24,11 @@
 ```submission```
 
 - A text file named `urls.txt` including:
-  1. Public Url to GitHub repository (not private) [URL01]
+  1. Public URL to GitHub repository (not private) [URL01]
   1. Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]
   1. Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
-  1. Public URLs to deployed application back-end in EC2 [URL04]
-  1. Public URL to your Prometheus Server [URL05]
+  1. Public URLs to deployed application back-end in ```AWS EC2``` [URL04]
+  1. Public URL to your **Prometheus Server** [URL05]
 - Your screenshots in JPG or PNG format, named using the screenshot number listed in the instructions. These screenshots should be included in your code repository in the root folder.
   1. Job failed because of compile errors. [SCREENSHOT01]
   1. Job failed because of unit tests. [SCREENSHOT02]
@@ -41,7 +41,7 @@
   1. Successful cleanup job. [SCREENSHOT09]
   1. Only deploy on pushed to `main` branch. [SCREENSHOT10]
   1. Provide a screenshot of a graph of your EC2 instance including available memory, available disk space, and CPU usage. [SCREENSHOT11]
-  1. Provide a screenshot of an alert that was sent by Prometheus. [SCREENSHOT12]
+  1. Provide a screenshot of an alert that was sent by Prometheus/Alertmanager. [SCREENSHOT12]
 
 - Your presentation should be in PDF format named "presentation.pdf" and should be included in your code repository root folder. 
 
@@ -50,9 +50,9 @@ Before you submit your project, please check your work against the project rubri
 ### Built With
 
 - [Circle CI](www.circleci.com) - Cloud-based CI/CD service
-- [Amazon AWS](https://aws.amazon.com/) - Cloud services
+- [Amazon Web Services - AWS](https://aws.amazon.com/) - Cloud services
 - [AWS CLI](https://aws.amazon.com/cli/) - Command-line tool for AWS
-- [CloudFormation](https://aws.amazon.com/cloudformation/) - Infrastrcuture as code
+- [AWS CloudFormation](https://aws.amazon.com/cloudformation/) - Infrastrcuture as code
 - [Ansible](https://www.ansible.com/) - Configuration management tool
 - [Prometheus](https://prometheus.io/) - Monitoring tool, and Alertmanager
 
