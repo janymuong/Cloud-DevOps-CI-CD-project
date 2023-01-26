@@ -1,7 +1,6 @@
 # Give your Application Auto-Deploy Superpowers
 ---
-
-```Cloud DevOps Engineering``
+```Cloud DevOps Engineering```
 
 ## Premise and objectives:
 
