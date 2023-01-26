@@ -37,7 +37,7 @@ Premise and objectives:
   1. Successful rollback after a failed smoke test. [SCREENSHOT07]  
   1. Successful promotion job. [SCREENSHOT08]
   1. Successful cleanup job. [SCREENSHOT09]
-  1. Only deploy on pushed to `master` branch. [SCREENSHOT10]
+  1. Only deploy on pushed to `main` branch. [SCREENSHOT10]
   1. Provide a screenshot of a graph of your EC2 instance including available memory, available disk space, and CPU usage. [SCREENSHOT11]
   1. Provide a screenshot of an alert that was sent by Prometheus. [SCREENSHOT12]
 
@@ -52,7 +52,7 @@ Before you submit your project, please check your work against the project rubri
 - [AWS CLI](https://aws.amazon.com/cli/) - Command-line tool for AWS
 - [CloudFormation](https://aws.amazon.com/cloudformation/) - Infrastrcuture as code
 - [Ansible](https://www.ansible.com/) - Configuration management tool
-- [Prometheus](https://prometheus.io/) - Monitoring tool
+- [Prometheus](https://prometheus.io/) - Monitoring tool, and Alertmanager
 
 ### Author
  Jany Muong
